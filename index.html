@@ -15,11 +15,10 @@
         .collection-header { font-size: 22px; font-weight: 300; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
         .bag-row { display: grid; grid-template-columns: 1fr 1fr 120px; gap: 40px; padding: 30px 0; border-bottom: 1px solid var(--border); align-items: center; }
         
-        /* Galerie styl */
-        .photo-wrapper { position: relative; width: 100%; aspect-ratio: 1/1; cursor: zoom-in; }
+        .photo-wrapper { position: relative; width: 100%; aspect-ratio: 1/1; cursor: pointer; }
         .photo-container { width: 100%; height: 100%; background: #fdfdfd; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 4px; border: 1px solid #f9f9f9; }
-        .photo-container img { max-width: 100%; height: auto; transition: transform 0.3s ease; }
-        .photo-nav { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 11px; pointer-events: none; }
+        .photo-container img { max-width: 100%; height: auto; transition: opacity 0.3s ease; }
+        .photo-nav { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 10px; pointer-events: none; opacity: 0.8; }
 
         .info h3 { font-size: 18px; font-weight: 600; margin: 0 0 8px 0; }
         .price { font-size: 19px; color: #666; margin-bottom: 20px; font-weight: 300; }
@@ -46,23 +45,38 @@
 </div>
 
 <script>
-    // Data podle tvých nových screenshotů
     const inventory = [
-        { c: "Nová Kolekce SURI", v: "17401", p: "1 499 Kč", b: ["100", "420", "900"] },
-        { c: "Nová Kolekce SURI", v: "17262", p: "1 299 Kč", b: ["400"] },
-        { c: "Nová Kolekce SURI", v: "17400", p: "1 350 Kč", b: ["420"] },
-        { c: "Nová Kolekce SURI", v: "17402", p: "1 450 Kč", b: ["420"] },
-        { c: "Nová Kolekce SURI", v: "17321", p: "1 650 Kč", b: ["600"] },
-        { c: "Nová Kolekce SURI", v: "17413", p: "1 599 Kč", b: ["700", "950"] },
-        { c: "Nová Kolekce SURI", v: "17451", p: "1 250 Kč", b: ["830"] }
+        // KOLEKCE 1 (Původní - krátké názvy)
+        { c: "SFY Debby (Původní)", v: "13600", p: "1 399 Kč", b: ["100", "300", "420"], type: "old" },
+        { c: "SFY Debby (Původní)", v: "13601", p: "1 599 Kč", b: ["100", "300", "420"], type: "old" },
+        { c: "SFY Debby (Původní)", v: "13602", p: "1 450 Kč", b: ["100", "300", "420"], type: "old" },
+        { c: "SFY Debby (Původní)", v: "13603", p: "1 299 Kč", b: ["100", "300", "420"], type: "old" },
+        { c: "SFY Debby (Původní)", v: "13606", p: "1 650 Kč", b: ["100", "300", "420"], type: "old" },
+        { c: "SFY Kolekce 141", v: "14140", p: "1 499 Kč", b: ["100", "300", "420"], type: "old" },
+        { c: "SFY Kolekce 141", v: "14141", p: "1 550 Kč", b: ["100", "300", "420"], type: "old" },
+        { c: "SFY Kolekce 141", v: "14144", p: "1 350 Kč", b: ["100", "300", "420"], type: "old" },
+        { c: "SFY Kolekce 141", v: "14145", p: "1 450 Kč", b: ["100", "300", "420"], type: "old" },
+        { c: "SFY Kolekce 141", v: "14146", p: "1 599 Kč", b: ["100", "300", "420"], type: "old" },
+
+        // KOLEKCE 2 (Nová - dlouhé názvy s galerii)
+        { c: "Nová Kolekce SURI", v: "17401", p: "1 499 Kč", b: ["100", "420", "900"], type: "new" },
+        { c: "Nová Kolekce SURI", v: "17262", p: "1 299 Kč", b: ["400"], type: "new" },
+        { c: "Nová Kolekce SURI", v: "17400", p: "1 350 Kč", b: ["420"], type: "new" },
+        { c: "Nová Kolekce SURI", v: "17402", p: "1 450 Kč", b: ["420"], type: "new" },
+        { c: "Nová Kolekce SURI", v: "17321", p: "1 650 Kč", b: ["600"], type: "new" },
+        { c: "Nová Kolekce SURI", v: "17413", p: "1 599 Kč", b: ["700", "950"], type: "new" },
+        { c: "Nová Kolekce SURI", v: "17451", p: "1 250 Kč", b: ["830"], type: "new" }
     ];
 
-    const colorsMap = { "100": "#000", "400": "#F5F5DC", "420": "#8B864E", "600": "#800000", "700": "#A52A2A", "830": "#D3D3D3", "900": "#555", "950": "#222" };
+    const colorsMap = { "100": "#000", "300": "#D2B48C", "400": "#F5F5DC", "420": "#8B864E", "600": "#800000", "700": "#A52A2A", "830": "#D3D3D3", "900": "#555", "950": "#222" };
 
-    // Funkce pro sestavení jména souboru podle tvého nového vzoru
-    function getImgName(vzor, barva, index = 1) {
-        const suffix = index === 1 ? "" : `_${index}`;
-        return `SURI-FREY_${barva}_${vzor},${barva}${suffix}.jpg`;
+    function getImgName(bag, barva, index = 1) {
+        if (bag.type === "old") {
+            return `${bag.v}_${barva}.jpg`;
+        } else {
+            const suffix = index === 1 ? "" : `_${index}`;
+            return `SURI-FREY_${barva}_${bag.v},${barva}${suffix}.jpg`;
+        }
     }
 
     function init() {
@@ -81,9 +95,9 @@
                 <div class="bag-row">
                     <div class="photo-wrapper" onclick="nextPhoto('${bag.v}')">
                         <div class="photo-container">
-                            <img id="img-${bag.v}" src="${getImgName(bag.v, firstColor)}" data-index="1" data-vzor="${bag.v}" data-barva="${firstColor}">
+                            <img id="img-${bag.v}" src="${getImgName(bag, firstColor)}" data-index="1" data-vzor="${bag.v}" data-barva="${firstColor}">
                         </div>
-                        <div class="photo-nav" id="nav-${bag.v}">Další pohledy kliknutím</div>
+                        ${bag.type === 'new' ? '<div class="photo-nav">Klikněte pro další pohled</div>' : ''}
                     </div>
                     <div class="info">
                         <h3>Model ${bag.v}</h3>
@@ -107,36 +121,26 @@
         }
     }
 
-    // Funkce pro přepínání barev
     function changeVar(vzor, barva, el) {
+        const bag = inventory.find(i => i.v === vzor);
         const img = document.getElementById(`img-${vzor}`);
-        img.src = getImgName(vzor, barva, 1);
+        img.src = getImgName(bag, barva, 1);
         img.dataset.index = 1;
         img.dataset.barva = barva;
-        
         el.parentElement.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
         el.classList.add('active');
     }
 
-    // Funkce pro galerii (přepínání _2, _3...)
     function nextPhoto(vzor) {
+        const bag = inventory.find(i => i.v === vzor);
+        if (bag.type === "old") return;
         const img = document.getElementById(`img-${vzor}`);
         let currentIndex = parseInt(img.dataset.index);
-        const barva = img.dataset.barva;
-        
         currentIndex = currentIndex >= 5 ? 1 : currentIndex + 1;
-        
-        const nextSrc = getImgName(vzor, barva, currentIndex);
-        
-        // Zkusíme, jestli fotka existuje
+        const nextSrc = getImgName(bag, img.dataset.barva, currentIndex);
         const temp = new Image();
-        temp.onload = () => {
-            img.src = nextSrc;
-            img.dataset.index = currentIndex;
-        };
-        temp.onerror = () => {
-            if(currentIndex !== 1) nextPhoto(vzor); // Pokud _4 není, skočí na _1
-        };
+        temp.onload = () => { img.src = nextSrc; img.dataset.index = currentIndex; };
+        temp.onerror = () => { if(currentIndex !== 1) nextPhoto(vzor); };
         temp.src = nextSrc;
     }
 
