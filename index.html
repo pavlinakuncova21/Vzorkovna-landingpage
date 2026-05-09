@@ -6,50 +6,27 @@
     <title>Suri Frey | Digitální Vzorkovna</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #000; --bg: #ffffff; --border: #ececec; --text-light: #888; }
+        :root { --accent: #000; --bg: #ffffff; --border: #ececec; }
         body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg); color: #222; }
-        
-        /* Header */
         header { padding: 40px 20px; text-align: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(255,255,255,0.95); z-index: 1000; backdrop-filter: blur(10px); }
         h1 { font-weight: 300; letter-spacing: 5px; margin: 0 0 20px 0; font-size: 24px; }
         .nav-brands button { background: none; border: none; padding: 10px 20px; margin: 0 10px; cursor: pointer; font-size: 14px; letter-spacing: 2px; opacity: 0.4; transition: 0.3s; }
         .nav-brands button.active { opacity: 1; border-bottom: 1px solid #000; font-weight: 600; }
-
-        /* Obsah */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px 100px 20px; }
-        
         .collection-section { margin-top: 80px; }
         .collection-header { font-size: 28px; font-weight: 300; border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 3px; }
-
         .bag-row { display: grid; grid-template-columns: 1fr 1fr 120px; gap: 40px; padding: 40px 0; border-bottom: 1px solid var(--border); align-items: center; }
-        
-        /* Carousel / Foto */
-        .photo-container { width: 100%; aspect-ratio: 1/1; background: #fdfdfd; display: flex; align-items: center; justify-content: center; position: relative; border-radius: 4px; overflow: hidden; }
-        .photo-container img { max-width: 90%; height: auto; transition: 0.4s ease; }
-        
-        /* Detaily */
-        .info h3 { font-size: 20px; font-weight: 600; margin: 0 0 10px 0; }
-        .price { font-size: 22px; color: #555; margin-bottom: 25px; font-weight: 300; }
-        
+        .photo-container { width: 100%; aspect-ratio: 1/1; background: #fdfdfd; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 4px; }
+        .photo-container img { max-width: 100%; height: auto; transition: 0.4s ease; }
+        .info h3 { font-size: 18px; font-weight: 600; margin: 0 0 10px 0; }
+        .price { font-size: 20px; color: #555; margin-bottom: 25px; font-weight: 300; }
         .colors { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
-        .swatch { width: 35px; height: 35px; border-radius: 50%; border: 1px solid #eee; cursor: pointer; position: relative; transition: 0.2s; display: flex; align-items: center; justify-content: center; font-size: 9px; color: transparent; }
-        .swatch:hover { transform: scale(1.1); }
+        .swatch { width: 30px; height: 30px; border-radius: 50%; border: 1px solid #eee; cursor: pointer; transition: 0.2s; }
         .swatch.active { border-color: #000; box-shadow: 0 0 0 1px #000; }
-        .swatch:hover::after { content: attr(data-label); position: absolute; top: -25px; background: #000; color: #fff; padding: 2px 6px; border-radius: 3px; font-size: 10px; z-index: 10; }
-
-        /* Checkbox */
         .select-area { text-align: center; border-left: 1px solid var(--border); height: 100%; display: flex; flex-direction: column; justify-content: center; }
-        .cb-custom { width: 35px; height: 35px; cursor: pointer; accent-color: #000; }
-        .select-label { font-size: 11px; letter-spacing: 1px; margin-top: 10px; color: var(--text-light); }
-
-        /* Summary Bar */
-        #summary-bar { position: fixed; bottom: 30px; right: 30px; background: #000; color: #fff; padding: 20px 40px; border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); display: none; align-items: center; gap: 20px; z-index: 2000; }
-        .btn-order { background: #fff; color: #000; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 12px; }
-
-        @media (max-width: 768px) {
-            .bag-row { grid-template-columns: 1fr; gap: 20px; }
-            .select-area { border-left: none; border-top: 1px solid var(--border); padding-top: 20px; }
-        }
+        .cb-custom { width: 30px; height: 30px; cursor: pointer; accent-color: #000; }
+        #summary-bar { position: fixed; bottom: 30px; right: 30px; background: #000; color: #fff; padding: 20px 40px; border-radius: 50px; display: none; align-items: center; gap: 20px; z-index: 2000; }
+        .btn-order { background: #fff; color: #000; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -63,57 +40,58 @@
     </div>
 </header>
 
-<div class="container" id="showroom">
-    </div>
+<div class="container" id="showroom"></div>
 
 <div id="summary-bar">
     <span>Vybráno: <strong id="count">0</strong> ks</span>
-    <button class="btn-order" onclick="alert('Poptávka bude odeslána k rozpracování.')">POSLAT POPTÁVKU</button>
+    <button class="btn-order" onclick="alert('Poptávka byla uložena.')">POSLAT POPTÁVKU</button>
 </div>
 
 <script>
-    // Data vytažená z tvé tabulky
+    // Data upravená podle tvých screenshotů s názvy fotek
     const inventory = [
-        { c: "SFY Angy SC", v: "17381", p: "1 249 Kč", b: ["100", "200", "700", "900"] },
-        { c: "SFY Angy SC", v: "17382", p: "1 799 Kč", b: ["100", "200", "700", "900"] },
-        { c: "SFY Bonny", v: "13140", p: "1 299 Kč", b: ["100", "150", "200", "300", "500", "700", "800"] },
-        { c: "SFY Brittney", v: "13500", p: "1 499 Kč", b: ["100", "200", "300", "500", "900"] },
-        { c: "SFY Cansy SC", v: "17320", p: "1 399 Kč", b: ["100", "300", "500", "800", "900"] },
-        { c: "SFY Chessy", v: "13430", p: "1 550 Kč", b: ["100", "200", "400", "600"] },
-        { c: "SFY Debby", v: "13600", p: "1 399 Kč", b: ["100", "300", "420", "500", "950"] },
-        { c: "SFY Elly SC", v: "17311", p: "1 699 Kč", b: ["100", "200", "500", "900"] },
-        { c: "SFY Mimmy SC", v: "17122", p: "1 150 Kč", b: ["100", "200", "300", "500", "700"] }
+        { c: "SFY Debby", v: "13600", p: "1 399 Kč", b: ["100", "300", "420"] },
+        { c: "SFY Debby", v: "13601", p: "1 599 Kč", b: ["100", "300", "420"] },
+        { c: "SFY Debby", v: "13602", p: "1 450 Kč", b: ["100", "300", "420"] },
+        { c: "SFY Debby", v: "13603", p: "1 299 Kč", b: ["100", "300", "420"] },
+        { c: "SFY Debby", v: "13606", p: "1 650 Kč", b: ["100", "300", "420"] },
+        { c: "SFY Kolekce 141", v: "14140", p: "1 499 Kč", b: ["100", "300", "420"] },
+        { c: "SFY Kolekce 141", v: "14141", p: "1 550 Kč", b: ["100", "300", "420"] },
+        { c: "SFY Kolekce 141", v: "14144", p: "1 350 Kč", b: ["100", "300", "420"] }
     ];
 
-    const colorsMap = { "100": "#000", "150": "#333", "200": "#5D4037", "300": "#D2B48C", "400": "#78909C", "420": "#556B2F", "500": "#1565C0", "600": "#4A148C", "700": "#B71C1C", "800": "#F57F17", "900": "#455A64", "950": "#212121" };
+    const colorsMap = { 
+        "100": "#000000", // Černá
+        "300": "#D2B48C", // Tan/Beige
+        "420": "#556B2F"  // Olivová/Khaki
+    };
 
     function init() {
         const showroom = document.getElementById('showroom');
         const groups = {};
-        
         inventory.forEach(item => {
             if (!groups[item.c]) groups[item.c] = [];
             groups[item.c].push(item);
         });
 
         for (const cat in groups) {
-            let html = `<section class="collection-section">
-                <h2 class="collection-header">${cat}</h2>`;
-            
+            let html = `<section class="collection-section"><h2 class="collection-header">${cat}</h2>`;
             groups[cat].forEach(bag => {
+                const firstColor = bag.b[0];
+                // CESTA UPRAVENÁ PODLE TVÉHO SCREENU: img/VZOR_BARVA.jpg
+                const imagePath = `img/${bag.v}_${firstColor}.jpg`;
                 html += `
                 <div class="bag-row" id="row-${bag.v}">
                     <div class="photo-container">
-                        <img id="img-${bag.v}" src="https://via.placeholder.com/500x500/f9f9f9/ccc?text=Vzor+${bag.v}" alt="Bag">
+                        <img id="img-${bag.v}" src="${imagePath}" onerror="this.src='https://via.placeholder.com/500?text=Foto+nenalezeno'" alt="Bag">
                     </div>
                     <div class="info">
-                        <p style="color: #999; margin: 0; font-size: 12px; letter-spacing: 1px;">SURI FREY</p>
-                        <h3>Model ${bag.v}</h3>
+                        <p style="color: #999; margin: 0; font-size: 11px;">SURI FREY</p>
+                        <h3>Vzor ${bag.v}</h3>
                         <div class="price">${bag.p}</div>
                         <div class="colors">
                             ${bag.b.map((color, i) => `
                                 <div class="swatch ${i===0?'active':''}" 
-                                     data-label="Barva ${color}"
                                      style="background: ${colorsMap[color] || '#ccc'}" 
                                      onclick="changeVar('${bag.v}', '${color}', this)">
                                 </div>
@@ -122,7 +100,7 @@
                     </div>
                     <div class="select-area">
                         <input type="checkbox" class="cb-custom" id="check-${bag.v}" onchange="refreshCount()">
-                        <span class="select-label">VYBRAT</span>
+                        <p style="font-size: 10px; margin-top: 5px; color: #888;">VYBRAT</p>
                     </div>
                 </div>`;
             });
@@ -135,14 +113,11 @@
         const img = document.getElementById(`img-${vzor}`);
         img.style.opacity = '0';
         setTimeout(() => {
-            img.src = `https://via.placeholder.com/500x500/f9f9f9/666?text=Vzor+${vzor}+Barva+${barva}`;
+            // ZDE JE TA ZMĚNA: bere to soubor bez koncovky _1
+            img.src = `img/${vzor}_${barva}.jpg`;
             img.style.opacity = '1';
-        }, 250);
-
-        // Reset výběru při změně barvy
+        }, 200);
         document.getElementById(`check-${vzor}`).checked = false;
-        
-        // Aktivní kulička
         el.parentElement.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
         el.classList.add('active');
         refreshCount();
@@ -156,6 +131,5 @@
 
     init();
 </script>
-
 </body>
 </html>
