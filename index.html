@@ -9,30 +9,32 @@
         :root { --accent: #000; --bg: #ffffff; --border: #ececec; }
         body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg); color: #222; }
         header { padding: 40px 20px; text-align: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(255,255,255,0.95); z-index: 1000; backdrop-filter: blur(10px); }
-        h1 { font-weight: 300; letter-spacing: 5px; margin: 0 0 20px 0; font-size: 24px; }
+        h1 { font-weight: 300; letter-spacing: 5px; margin: 0 0 10px 0; font-size: 24px; text-transform: uppercase; }
         .nav-brands button { background: none; border: none; padding: 10px 20px; margin: 0 10px; cursor: pointer; font-size: 14px; letter-spacing: 2px; opacity: 0.4; transition: 0.3s; }
-        .nav-brands button.active { opacity: 1; border-bottom: 1px solid #000; font-weight: 600; }
+        .nav-brands button.active { opacity: 1; border-bottom: 2px solid #000; font-weight: 600; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px 100px 20px; }
-        .collection-section { margin-top: 80px; }
-        .collection-header { font-size: 28px; font-weight: 300; border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 3px; }
-        .bag-row { display: grid; grid-template-columns: 1fr 1fr 120px; gap: 40px; padding: 40px 0; border-bottom: 1px solid var(--border); align-items: center; }
-        .photo-container { width: 100%; aspect-ratio: 1/1; background: #fdfdfd; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 4px; }
-        .photo-container img { max-width: 100%; height: auto; transition: 0.4s ease; }
-        .info h3 { font-size: 18px; font-weight: 600; margin: 0 0 10px 0; }
-        .price { font-size: 20px; color: #555; margin-bottom: 25px; font-weight: 300; }
-        .colors { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
-        .swatch { width: 30px; height: 30px; border-radius: 50%; border: 1px solid #eee; cursor: pointer; transition: 0.2s; }
-        .swatch.active { border-color: #000; box-shadow: 0 0 0 1px #000; }
-        .select-area { text-align: center; border-left: 1px solid var(--border); height: 100%; display: flex; flex-direction: column; justify-content: center; }
-        .cb-custom { width: 30px; height: 30px; cursor: pointer; accent-color: #000; }
-        #summary-bar { position: fixed; bottom: 30px; right: 30px; background: #000; color: #fff; padding: 20px 40px; border-radius: 50px; display: none; align-items: center; gap: 20px; z-index: 2000; }
-        .btn-order { background: #fff; color: #000; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; }
+        .collection-section { margin-top: 60px; }
+        .collection-header { font-size: 22px; font-weight: 300; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
+        .bag-row { display: grid; grid-template-columns: 1fr 1fr 120px; gap: 40px; padding: 30px 0; border-bottom: 1px solid var(--border); align-items: center; }
+        .photo-container { width: 100%; aspect-ratio: 1/1; background: #fdfdfd; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 4px; border: 1px solid #f9f9f9; }
+        .photo-container img { max-width: 100%; height: auto; transition: opacity 0.3s ease; }
+        .info h3 { font-size: 18px; font-weight: 600; margin: 0 0 8px 0; color: #111; }
+        .price { font-size: 19px; color: #666; margin-bottom: 20px; font-weight: 300; }
+        .colors { display: flex; gap: 12px; margin-top: 15px; flex-wrap: wrap; }
+        .swatch { width: 32px; height: 32px; border-radius: 50%; border: 1px solid #eee; cursor: pointer; transition: 0.2s; position: relative; }
+        .swatch.active { border-color: #000; box-shadow: 0 0 0 2px #fff, 0 0 0 3px #000; }
+        .select-area { text-align: center; border-left: 1px solid var(--border); height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .cb-custom { width: 28px; height: 28px; cursor: pointer; accent-color: #000; }
+        .select-label { font-size: 10px; margin-top: 8px; color: #999; text-transform: uppercase; letter-spacing: 1px; }
+        #summary-bar { position: fixed; bottom: 30px; right: 30px; background: #000; color: #fff; padding: 15px 35px; border-radius: 50px; display: none; align-items: center; gap: 20px; z-index: 2000; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .btn-order { background: #fff; color: #000; border: none; padding: 10px 22px; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 13px; }
+        @media (max-width: 768px) { .bag-row { grid-template-columns: 1fr; gap: 20px; } .select-area { border-left: none; border-top: 1px solid var(--border); padding-top: 20px; } }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>DIGITÁLNÍ VZORKOVNA</h1>
+    <h1>Digitální Vzorkovna</h1>
     <div class="nav-brands">
         <button onclick="alert('Sekce Tamaris se připravuje')">TAMARIS</button>
         <button class="active">SURI FREY</button>
@@ -44,31 +46,35 @@
 
 <div id="summary-bar">
     <span>Vybráno: <strong id="count">0</strong> ks</span>
-    <button class="btn-order" onclick="alert('Poptávka byla uložena.')">POSLAT POPTÁVKU</button>
+    <button class="btn-order" onclick="alert('Vaše poptávka byla uložena k dalšímu zpracování.')">POSLAT POPTÁVKU</button>
 </div>
 
 <script>
-    // Data upravená podle tvých screenshotů s názvy fotek
+    // Seznam produktů přesně podle tvých nahraných fotek
     const inventory = [
-        { c: "SFY Debby", v: "13600", p: "1 399 Kč", b: ["100", "300", "420"] },
-        { c: "SFY Debby", v: "13601", p: "1 599 Kč", b: ["100", "300", "420"] },
-        { c: "SFY Debby", v: "13602", p: "1 450 Kč", b: ["100", "300", "420"] },
-        { c: "SFY Debby", v: "13603", p: "1 299 Kč", b: ["100", "300", "420"] },
-        { c: "SFY Debby", v: "13606", p: "1 650 Kč", b: ["100", "300", "420"] },
+        { c: "SFY Debby (136)", v: "13600", p: "1 399 Kč", b: ["100", "300", "420"] },
+        { c: "SFY Debby (136)", v: "13601", p: "1 599 Kč", b: ["100", "300", "420"] },
+        { c: "SFY Debby (136)", v: "13602", p: "1 450 Kč", b: ["100", "300", "420"] },
+        { c: "SFY Debby (136)", v: "13603", p: "1 299 Kč", b: ["100", "300", "420"] },
+        { c: "SFY Debby (136)", v: "13606", p: "1 650 Kč", b: ["100", "300", "420"] },
         { c: "SFY Kolekce 141", v: "14140", p: "1 499 Kč", b: ["100", "300", "420"] },
         { c: "SFY Kolekce 141", v: "14141", p: "1 550 Kč", b: ["100", "300", "420"] },
-        { c: "SFY Kolekce 141", v: "14144", p: "1 350 Kč", b: ["100", "300", "420"] }
+        { c: "SFY Kolekce 141", v: "14144", p: "1 350 Kč", b: ["100", "300", "420"] },
+        { c: "SFY Kolekce 141", v: "14145", p: "1 450 Kč", b: ["100", "300", "420"] },
+        { c: "SFY Kolekce 141", v: "14146", p: "1 599 Kč", b: ["100", "300", "420"] }
     ];
 
+    // Definice barev pro kuličky (vzor: barevný kód)
     const colorsMap = { 
-        "100": "#000000", // Černá
-        "300": "#D2B48C", // Tan/Beige
-        "420": "#556B2F"  // Olivová/Khaki
+        "100": "#000000", // Black
+        "300": "#D2B48C", // Tan/Sand
+        "420": "#556B2F"  // Olive/Khaki
     };
 
     function init() {
         const showroom = document.getElementById('showroom');
         const groups = {};
+        
         inventory.forEach(item => {
             if (!groups[item.c]) groups[item.c] = [];
             groups[item.c].push(item);
@@ -78,20 +84,21 @@
             let html = `<section class="collection-section"><h2 class="collection-header">${cat}</h2>`;
             groups[cat].forEach(bag => {
                 const firstColor = bag.b[0];
-                // CESTA UPRAVENÁ PODLE TVÉHO SCREENU: img/VZOR_BARVA.jpg
-                const imagePath = `img/${bag.v}_${firstColor}.jpg`;
+                // CESTA: Hledá přímo v rootu (ve stejném místě jako index.html)
+                const imagePath = `${bag.v}_${firstColor}.jpg`;
                 html += `
                 <div class="bag-row" id="row-${bag.v}">
                     <div class="photo-container">
-                        <img id="img-${bag.v}" src="${imagePath}" onerror="this.src='https://via.placeholder.com/500?text=Foto+nenalezeno'" alt="Bag">
+                        <img id="img-${bag.v}" src="${imagePath}" onerror="this.src='https://via.placeholder.com/500?text=Foto+připravujeme'" alt="Bag">
                     </div>
                     <div class="info">
-                        <p style="color: #999; margin: 0; font-size: 11px;">SURI FREY</p>
+                        <p style="color: #bbb; margin: 0; font-size: 11px; letter-spacing: 1px;">SURI FREY</p>
                         <h3>Vzor ${bag.v}</h3>
                         <div class="price">${bag.p}</div>
                         <div class="colors">
                             ${bag.b.map((color, i) => `
                                 <div class="swatch ${i===0?'active':''}" 
+                                     title="Barva ${color}"
                                      style="background: ${colorsMap[color] || '#ccc'}" 
                                      onclick="changeVar('${bag.v}', '${color}', this)">
                                 </div>
@@ -100,7 +107,7 @@
                     </div>
                     <div class="select-area">
                         <input type="checkbox" class="cb-custom" id="check-${bag.v}" onchange="refreshCount()">
-                        <p style="font-size: 10px; margin-top: 5px; color: #888;">VYBRAT</p>
+                        <div class="select-label">Vybrat</div>
                     </div>
                 </div>`;
             });
@@ -111,16 +118,24 @@
 
     function changeVar(vzor, barva, el) {
         const img = document.getElementById(`img-${vzor}`);
-        img.style.opacity = '0';
-        setTimeout(() => {
-            // ZDE JE TA ZMĚNA: bere to soubor bez koncovky _1
-            img.src = `img/${vzor}_${barva}.jpg`;
+        img.style.opacity = '0.3';
+        
+        // Změna zdroje obrázku - hledá přímo v rootu
+        const newSrc = `${vzor}_${barva}.jpg`;
+        
+        const tempImg = new Image();
+        tempImg.onload = function() {
+            img.src = newSrc;
             img.style.opacity = '1';
-        }, 200);
-        document.getElementById(`check-${vzor}`).checked = false;
+        };
+        tempImg.onerror = function() {
+            img.src = 'https://via.placeholder.com/500?text=Foto+připravujeme';
+            img.style.opacity = '1';
+        };
+        tempImg.src = newSrc;
+
         el.parentElement.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
         el.classList.add('active');
-        refreshCount();
     }
 
     function refreshCount() {
