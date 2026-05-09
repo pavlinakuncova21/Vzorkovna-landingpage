@@ -13,11 +13,12 @@
         /* LOGIN */
         #login-overlay { position: fixed; inset: 0; background: #fff; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: 0.5s; }
         .login-box { text-align: center; max-width: 300px; width: 100%; }
-        .login-box input { width: 100%; padding: 15px; border: 1px solid #000; margin: 20px 0; outline: none; text-align: center; letter-spacing: 5px; }
-        .login-box button { background: #000; color: #fff; border: none; padding: 15px 40px; cursor: pointer; width: 100%; letter-spacing: 2px; }
+        .login-box h1 { font-weight: 200; letter-spacing: 3px; font-size: 18px; margin-bottom: 30px; }
+        .login-box input { width: 100%; padding: 15px; border: 1px solid #000; margin-bottom: 20px; outline: none; text-align: center; letter-spacing: 5px; }
+        .login-box button { background: #000; color: #fff; border: none; padding: 15px 40px; cursor: pointer; width: 100%; letter-spacing: 2px; font-weight: 600; }
 
         /* HEADER & NAVIGATION */
-        header { padding: 40px 20px; text-align: center; border-bottom: 1px solid var(--border); sticky; top: 0; background: #fff; z-index: 100; }
+        header { padding: 40px 20px; text-align: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: #fff; z-index: 100; }
         h1 { font-weight: 200; letter-spacing: 8px; text-transform: uppercase; margin-bottom: 30px; font-size: 22px; }
         .brand-nav { display: flex; justify-content: center; gap: 40px; }
         .brand-nav button { background: none; border: none; cursor: pointer; font-size: 13px; letter-spacing: 2px; opacity: 0.3; transition: 0.3s; padding-bottom: 5px; }
@@ -34,15 +35,15 @@
         /* CAROUSEL */
         .carousel { position: relative; width: 100%; aspect-ratio: 1/1; background: var(--grey); display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .carousel img { max-width: 100%; height: auto; transition: 0.4s; }
-        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 24px; cursor: pointer; padding: 20px; opacity: 0.5; transition: 0.3s; }
-        .carousel-btn:hover { opacity: 1; }
+        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 24px; cursor: pointer; padding: 20px; opacity: 0.3; transition: 0.3s; z-index: 5; }
+        .carousel-btn:hover { opacity: 1; background: rgba(255,255,255,0.5); }
         .prev { left: 0; } .next { right: 0; }
         .img-counter { position: absolute; bottom: 20px; font-size: 10px; letter-spacing: 2px; color: #999; }
 
         /* INFO & COLORS */
         .info h2 { font-weight: 600; font-size: 20px; margin: 0 0 10px 0; }
         .price { font-size: 18px; font-weight: 200; margin-bottom: 30px; }
-        .colors { display: flex; gap: 15px; margin-bottom: 20px; }
+        .colors { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
         .swatch { width: 35px; height: 35px; border-radius: 50%; border: 1px solid #eee; cursor: pointer; transition: 0.2s; position: relative; }
         .swatch.active::after { content: ''; position: absolute; inset: -4px; border: 1px solid #000; border-radius: 50%; }
 
@@ -50,8 +51,8 @@
         .select-box { display: flex; justify-content: center; }
         .cb-container { position: relative; width: 40px; height: 40px; cursor: pointer; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; }
         .cb-container input { display: none; }
-        .cb-container .checkmark { width: 20px; height: 20px; background: transparent; transition: 0.3s; }
-        .cb-container input:checked + .checkmark { background: #000; }
+        .cb-container .checkmark { width: 20px; height: 20px; background: transparent; transition: 0.3s; border: 1px solid #eee; }
+        .cb-container input:checked + .checkmark { background: #000; border-color: #000; }
 
         /* SUMMARY BAR */
         #summary-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #000; color: #fff; padding: 25px; transform: translateY(100%); transition: 0.5s; display: flex; justify-content: space-between; align-items: center; z-index: 1000; }
@@ -68,7 +69,7 @@
 
 <div id="login-overlay">
     <div class="login-box">
-        <h1>Vstup do vzorkovny</h1>
+        <h1>VSTUP DO VZORKOVNY</h1>
         <input type="password" id="pass" placeholder="HESLO">
         <button onclick="checkLogin()">VSTOUPIT</button>
     </div>
@@ -91,24 +92,38 @@
 </div>
 
 <script>
-    // --- KONFIGURACE DAT ---
+    // --- KONFIGURACE HESLA ---
+    const APP_PASSWORD = "SURI2026"; // Tady si můžeš heslo kdykoliv změnit
+
+    // --- DATABÁZE PRODUKTŮ ---
     const inventory = [
+        // KOLEKCE DEBBY (Starý formát fotek)
         { brand: "Suri Frey", collection: "Debby", vzor: "13600", price: "1 399 Kč", colors: ["100", "300", "420"], type: "old" },
         { brand: "Suri Frey", collection: "Debby", vzor: "13601", price: "1 599 Kč", colors: ["100", "300", "420"], type: "old" },
-        { brand: "Suri Frey", collection: "Nová Kolekce", vzor: "17401", price: "1 499 Kč", colors: ["100", "420", "900"], type: "new" },
-        { brand: "Suri Frey", collection: "Nová Kolekce", vzor: "17413", price: "1 599 Kč", colors: ["700", "950"], type: "new" }
+        { brand: "Suri Frey", collection: "Debby", vzor: "13602", price: "1 450 Kč", colors: ["100", "300", "420"], type: "old" },
+        
+        // NOVÁ KOLEKCE (Nový formát s carouselem _2, _3...)
+        { brand: "Suri Frey", collection: "Nová Kolekce 174", vzor: "17401", price: "1 499 Kč", colors: ["100", "420", "900"], type: "new" },
+        { brand: "Suri Frey", collection: "Nová Kolekce 174", vzor: "17413", price: "1 599 Kč", colors: ["700", "950"], type: "new" }
     ];
 
-    const colorsMap = { "100": "#000", "300": "#D2B48C", "420": "#8B864E", "700": "#A52A2A", "900": "#555", "950": "#222" };
+    const colorsMap = { 
+        "100": "#000", "300": "#D2B48C", "400": "#F5F5DC", 
+        "420": "#8B864E", "600": "#800000", "700": "#A52A2A", 
+        "830": "#D3D3D3", "900": "#555", "950": "#222" 
+    };
+
     let selectedItems = JSON.parse(localStorage.getItem('vzorkovna_selection')) || {};
     let currentBrand = "Suri Frey";
 
-    // --- LOGIKA ---
+    // --- LOGIKA FUNKCÍ ---
     function checkLogin() {
-        if(document.getElementById('pass').value === '1234') { // Změň si heslo zde
+        if(document.getElementById('pass').value.toUpperCase() === APP_PASSWORD) { 
             document.getElementById('login-overlay').style.opacity = '0';
             setTimeout(() => document.getElementById('login-overlay').remove(), 500);
-        } else { alert('Chybné heslo'); }
+        } else { 
+            alert('Chybné heslo. Zkuste to znovu.'); 
+        }
     }
 
     function changeBrand(brand) {
@@ -131,6 +146,11 @@
         const filtered = inventory.filter(i => i.brand === currentBrand);
         const groups = [...new Set(filtered.map(i => i.collection))];
 
+        if(filtered.length === 0) {
+            container.innerHTML = '<p style="text-align:center; margin-top:100px; color:#999; letter-spacing:2px;">TATO SEKCE SE PŘIPRAVUJE</p>';
+            return;
+        }
+
         groups.forEach(colName => {
             let section = `<div class="collection-block"><h2 class="collection-title">${colName}</h2>`;
             filtered.filter(i => i.collection === colName).forEach(bag => {
@@ -143,24 +163,27 @@
                 <div class="bag-row">
                     <div class="carousel">
                         <button class="carousel-btn prev" onclick="moveImg('${bag.vzor}', -1)">‹</button>
-                        <img src="${getImgPath(bag, color, imgIndex)}" id="img-${bag.vzor}">
+                        <img src="${getImgPath(bag, color, imgIndex)}" id="img-${bag.vzor}" onerror="this.src='https://via.placeholder.com/600?text=Foto+nenalezeno'">
                         <button class="carousel-btn next" onclick="moveImg('${bag.vzor}', 1)">›</button>
-                        <div class="img-counter" id="count-${bag.vzor}">POHLED ${imgIndex}</div>
+                        <div class="img-counter">POHLED ${imgIndex}</div>
                     </div>
                     <div class="info">
-                        <h2>Model ${bag.vzor}</h2>
+                        <h2>Vzor ${bag.vzor}</h2>
                         <div class="price">${bag.price}</div>
                         <div class="colors">
                             ${bag.colors.map(c => `
                                 <div class="swatch ${c === color ? 'active' : ''}" 
-                                     style="background:${colorsMap[c]}" 
+                                     style="background:${colorsMap[c] || '#ccc'}" 
+                                     title="Barva ${c}"
                                      onclick="changeColor('${bag.vzor}', '${c}')"></div>
                             `).join('')}
                         </div>
-                        <p style="font-size:11px; color:#999">Klikněte na barvu pro změnu fotek. Klikněte na šipky pro pohledy.</p>
+                        <p style="font-size:10px; color:#bbb; text-transform:uppercase; letter-spacing:1px; margin-top:20px;">
+                            ${bag.type === 'new' ? 'Klikněte na šipky pro detaily' : 'Základní pohled'}
+                        </p>
                     </div>
                     <div class="select-box">
-                        <label class="cb-container">
+                        <label class="cb-container" title="Přidat do poptávky">
                             <input type="checkbox" id="cb-${bag.vzor}" onchange="toggleSelect('${bag.vzor}', '${color}')" ${isChecked}>
                             <span class="checkmark"></span>
                         </label>
@@ -177,17 +200,23 @@
         const bag = inventory.find(i => i.vzor === vzor);
         bag.activeColor = color;
         bag.activeImgIndex = 1;
-        // Pokud změní barvu, odškrtneme (podle tvého zadání)
-        document.getElementById(`cb-${vzor}`).checked = false;
-        delete selectedItems[`${vzor}_${color}`]; 
+        // Odškrtnutí při změně barvy
+        const id = `${vzor}_${color}`;
+        if(!selectedItems[id]) {
+            document.getElementById(`cb-${vzor}`).checked = false;
+        }
         render();
     }
 
     function moveImg(vzor, dir) {
         const bag = inventory.find(i => i.vzor === vzor);
+        if(bag.type === "old") return; // Staré fotky nemají carousel
+        
         if(!bag.activeImgIndex) bag.activeImgIndex = 1;
         bag.activeImgIndex += dir;
-        if(bag.activeImgIndex < 1) bag.activeImgIndex = 3; // Předpokládáme 3 fotky
+        
+        // Loop carouselu (předpoklad 3-4 fotky)
+        if(bag.activeImgIndex < 1) bag.activeImgIndex = 3; 
         if(bag.activeImgIndex > 3) bag.activeImgIndex = 1;
         render();
     }
@@ -210,9 +239,11 @@
     }
 
     function sendOrder() {
-        alert("Poptávka na " + Object.keys(selectedItems).join(", ") + " byla připravena.");
+        const seznam = Object.keys(selectedItems).join(", ");
+        alert("Poptávka byla vytvořena pro modely: " + seznam);
     }
 
+    // Spuštění po načtení
     render();
 </script>
 </body>
