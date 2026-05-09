@@ -3,154 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suri Frey | Digitální Vzorkovna</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Digitální Vzorkovna | Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #000; --bg: #ffffff; --border: #ececec; }
-        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg); color: #222; }
-        header { padding: 40px 20px; text-align: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(255,255,255,0.95); z-index: 1000; backdrop-filter: blur(10px); }
-        h1 { font-weight: 300; letter-spacing: 5px; margin: 0; font-size: 24px; text-transform: uppercase; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px 100px 20px; }
-        .collection-section { margin-top: 60px; }
-        .collection-header { font-size: 22px; font-weight: 300; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
-        .bag-row { display: grid; grid-template-columns: 1fr 1fr 120px; gap: 40px; padding: 30px 0; border-bottom: 1px solid var(--border); align-items: center; }
+        :root { --accent: #000; --bg: #fff; --grey: #f8f8f8; --border: #eee; }
+        * { box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg); color: #1a1a1a; line-height: 1.6; }
         
-        .photo-wrapper { position: relative; width: 100%; aspect-ratio: 1/1; cursor: pointer; }
-        .photo-container { width: 100%; height: 100%; background: #fdfdfd; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 4px; border: 1px solid #f9f9f9; }
-        .photo-container img { max-width: 100%; height: auto; transition: opacity 0.3s ease; }
-        .photo-nav { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 10px; pointer-events: none; opacity: 0.8; }
+        /* LOGIN */
+        #login-overlay { position: fixed; inset: 0; background: #fff; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: 0.5s; }
+        .login-box { text-align: center; max-width: 300px; width: 100%; }
+        .login-box input { width: 100%; padding: 15px; border: 1px solid #000; margin: 20px 0; outline: none; text-align: center; letter-spacing: 5px; }
+        .login-box button { background: #000; color: #fff; border: none; padding: 15px 40px; cursor: pointer; width: 100%; letter-spacing: 2px; }
 
-        .info h3 { font-size: 18px; font-weight: 600; margin: 0 0 8px 0; }
-        .price { font-size: 19px; color: #666; margin-bottom: 20px; font-weight: 300; }
-        .colors { display: flex; gap: 12px; margin-top: 15px; flex-wrap: wrap; }
-        .swatch { width: 32px; height: 32px; border-radius: 50%; border: 1px solid #eee; cursor: pointer; transition: 0.2s; }
-        .swatch.active { border-color: #000; box-shadow: 0 0 0 2px #fff, 0 0 0 3px #000; }
-        .select-area { text-align: center; border-left: 1px solid var(--border); height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .cb-custom { width: 28px; height: 28px; cursor: pointer; accent-color: #000; }
-        #summary-bar { position: fixed; bottom: 30px; right: 30px; background: #000; color: #fff; padding: 15px 35px; border-radius: 50px; display: none; align-items: center; gap: 20px; z-index: 2000; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .btn-order { background: #fff; color: #000; border: none; padding: 10px 22px; border-radius: 20px; cursor: pointer; font-weight: 600; }
+        /* HEADER & NAVIGATION */
+        header { padding: 40px 20px; text-align: center; border-bottom: 1px solid var(--border); sticky; top: 0; background: #fff; z-index: 100; }
+        h1 { font-weight: 200; letter-spacing: 8px; text-transform: uppercase; margin-bottom: 30px; font-size: 22px; }
+        .brand-nav { display: flex; justify-content: center; gap: 40px; }
+        .brand-nav button { background: none; border: none; cursor: pointer; font-size: 13px; letter-spacing: 2px; opacity: 0.3; transition: 0.3s; padding-bottom: 5px; }
+        .brand-nav button.active { opacity: 1; border-bottom: 1px solid #000; }
+
+        /* CONTENT */
+        .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
+        .collection-block { margin-bottom: 80px; }
+        .collection-title { font-weight: 200; font-size: 26px; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 40px; letter-spacing: 3px; text-transform: uppercase; }
+        
+        /* ROW - KABELKA */
+        .bag-row { display: grid; grid-template-columns: 1.2fr 1fr 100px; gap: 60px; padding: 40px 0; border-bottom: 1px solid var(--border); align-items: center; }
+        
+        /* CAROUSEL */
+        .carousel { position: relative; width: 100%; aspect-ratio: 1/1; background: var(--grey); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .carousel img { max-width: 100%; height: auto; transition: 0.4s; }
+        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 24px; cursor: pointer; padding: 20px; opacity: 0.5; transition: 0.3s; }
+        .carousel-btn:hover { opacity: 1; }
+        .prev { left: 0; } .next { right: 0; }
+        .img-counter { position: absolute; bottom: 20px; font-size: 10px; letter-spacing: 2px; color: #999; }
+
+        /* INFO & COLORS */
+        .info h2 { font-weight: 600; font-size: 20px; margin: 0 0 10px 0; }
+        .price { font-size: 18px; font-weight: 200; margin-bottom: 30px; }
+        .colors { display: flex; gap: 15px; margin-bottom: 20px; }
+        .swatch { width: 35px; height: 35px; border-radius: 50%; border: 1px solid #eee; cursor: pointer; transition: 0.2s; position: relative; }
+        .swatch.active::after { content: ''; position: absolute; inset: -4px; border: 1px solid #000; border-radius: 50%; }
+
+        /* CHECKBOX */
+        .select-box { display: flex; justify-content: center; }
+        .cb-container { position: relative; width: 40px; height: 40px; cursor: pointer; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; }
+        .cb-container input { display: none; }
+        .cb-container .checkmark { width: 20px; height: 20px; background: transparent; transition: 0.3s; }
+        .cb-container input:checked + .checkmark { background: #000; }
+
+        /* SUMMARY BAR */
+        #summary-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #000; color: #fff; padding: 25px; transform: translateY(100%); transition: 0.5s; display: flex; justify-content: space-between; align-items: center; z-index: 1000; }
+        #summary-bar.visible { transform: translateY(0); }
+        .order-btn { background: #fff; color: #000; border: none; padding: 12px 30px; cursor: pointer; font-weight: 600; letter-spacing: 1px; }
+
+        @media (max-width: 900px) {
+            .bag-row { grid-template-columns: 1fr; gap: 30px; }
+            .select-box { padding: 20px; border-top: 1px solid #eee; }
+        }
     </style>
 </head>
 <body>
 
+<div id="login-overlay">
+    <div class="login-box">
+        <h1>Vstup do vzorkovny</h1>
+        <input type="password" id="pass" placeholder="HESLO">
+        <button onclick="checkLogin()">VSTOUPIT</button>
+    </div>
+</div>
+
 <header>
     <h1>Digitální Vzorkovna</h1>
+    <div class="brand-nav">
+        <button onclick="changeBrand('Tamaris')" id="btn-Tamaris">TAMARIS</button>
+        <button onclick="changeBrand('Suri Frey')" id="btn-Suri Frey" class="active">SURI FREY</button>
+        <button onclick="changeBrand('Emily & Noah')" id="btn-Emily & Noah">EMILY & NOAH</button>
+    </div>
 </header>
 
-<div class="container" id="showroom"></div>
+<div class="container" id="main-content"></div>
 
 <div id="summary-bar">
-    <span>Vybráno: <strong id="count">0</strong> ks</span>
-    <button class="btn-order" onclick="alert('Poptávka uložena.')">POSLAT POPTÁVKU</button>
+    <div>VYBRÁNO: <span id="count">0</span> položek</div>
+    <button class="order-btn" onclick="sendOrder()">ODESLAT POPTÁVKU</button>
 </div>
 
 <script>
+    // --- KONFIGURACE DAT ---
     const inventory = [
-        // KOLEKCE 1 (Původní - krátké názvy)
-        { c: "SFY Debby (Původní)", v: "13600", p: "1 399 Kč", b: ["100", "300", "420"], type: "old" },
-        { c: "SFY Debby (Původní)", v: "13601", p: "1 599 Kč", b: ["100", "300", "420"], type: "old" },
-        { c: "SFY Debby (Původní)", v: "13602", p: "1 450 Kč", b: ["100", "300", "420"], type: "old" },
-        { c: "SFY Debby (Původní)", v: "13603", p: "1 299 Kč", b: ["100", "300", "420"], type: "old" },
-        { c: "SFY Debby (Původní)", v: "13606", p: "1 650 Kč", b: ["100", "300", "420"], type: "old" },
-        { c: "SFY Kolekce 141", v: "14140", p: "1 499 Kč", b: ["100", "300", "420"], type: "old" },
-        { c: "SFY Kolekce 141", v: "14141", p: "1 550 Kč", b: ["100", "300", "420"], type: "old" },
-        { c: "SFY Kolekce 141", v: "14144", p: "1 350 Kč", b: ["100", "300", "420"], type: "old" },
-        { c: "SFY Kolekce 141", v: "14145", p: "1 450 Kč", b: ["100", "300", "420"], type: "old" },
-        { c: "SFY Kolekce 141", v: "14146", p: "1 599 Kč", b: ["100", "300", "420"], type: "old" },
-
-        // KOLEKCE 2 (Nová - dlouhé názvy s galerii)
-        { c: "Nová Kolekce SURI", v: "17401", p: "1 499 Kč", b: ["100", "420", "900"], type: "new" },
-        { c: "Nová Kolekce SURI", v: "17262", p: "1 299 Kč", b: ["400"], type: "new" },
-        { c: "Nová Kolekce SURI", v: "17400", p: "1 350 Kč", b: ["420"], type: "new" },
-        { c: "Nová Kolekce SURI", v: "17402", p: "1 450 Kč", b: ["420"], type: "new" },
-        { c: "Nová Kolekce SURI", v: "17321", p: "1 650 Kč", b: ["600"], type: "new" },
-        { c: "Nová Kolekce SURI", v: "17413", p: "1 599 Kč", b: ["700", "950"], type: "new" },
-        { c: "Nová Kolekce SURI", v: "17451", p: "1 250 Kč", b: ["830"], type: "new" }
+        { brand: "Suri Frey", collection: "Debby", vzor: "13600", price: "1 399 Kč", colors: ["100", "300", "420"], type: "old" },
+        { brand: "Suri Frey", collection: "Debby", vzor: "13601", price: "1 599 Kč", colors: ["100", "300", "420"], type: "old" },
+        { brand: "Suri Frey", collection: "Nová Kolekce", vzor: "17401", price: "1 499 Kč", colors: ["100", "420", "900"], type: "new" },
+        { brand: "Suri Frey", collection: "Nová Kolekce", vzor: "17413", price: "1 599 Kč", colors: ["700", "950"], type: "new" }
     ];
 
-    const colorsMap = { "100": "#000", "300": "#D2B48C", "400": "#F5F5DC", "420": "#8B864E", "600": "#800000", "700": "#A52A2A", "830": "#D3D3D3", "900": "#555", "950": "#222" };
+    const colorsMap = { "100": "#000", "300": "#D2B48C", "420": "#8B864E", "700": "#A52A2A", "900": "#555", "950": "#222" };
+    let selectedItems = JSON.parse(localStorage.getItem('vzorkovna_selection')) || {};
+    let currentBrand = "Suri Frey";
 
-    function getImgName(bag, barva, index = 1) {
-        if (bag.type === "old") {
-            return `${bag.v}_${barva}.jpg`;
-        } else {
-            const suffix = index === 1 ? "" : `_${index}`;
-            return `SURI-FREY_${barva}_${bag.v},${barva}${suffix}.jpg`;
-        }
+    // --- LOGIKA ---
+    function checkLogin() {
+        if(document.getElementById('pass').value === '1234') { // Změň si heslo zde
+            document.getElementById('login-overlay').style.opacity = '0';
+            setTimeout(() => document.getElementById('login-overlay').remove(), 500);
+        } else { alert('Chybné heslo'); }
     }
 
-    function init() {
-        const showroom = document.getElementById('showroom');
-        const groups = {};
-        inventory.forEach(item => {
-            if (!groups[item.c]) groups[item.c] = [];
-            groups[item.c].push(item);
-        });
+    function changeBrand(brand) {
+        currentBrand = brand;
+        document.querySelectorAll('.brand-nav button').forEach(b => b.classList.remove('active'));
+        document.getElementById('btn-' + brand).classList.add('active');
+        render();
+    }
 
-        for (const cat in groups) {
-            let html = `<section class="collection-section"><h2 class="collection-header">${cat}</h2>`;
-            groups[cat].forEach(bag => {
-                const firstColor = bag.b[0];
-                html += `
+    function getImgPath(bag, color, index) {
+        if(bag.type === "old") return `${bag.vzor}_${color}.jpg`;
+        const suffix = index === 1 ? "" : `_${index}`;
+        return `SURI-FREY_${color}_${bag.vzor},${color}${suffix}.jpg`;
+    }
+
+    function render() {
+        const container = document.getElementById('main-content');
+        container.innerHTML = '';
+        
+        const filtered = inventory.filter(i => i.brand === currentBrand);
+        const groups = [...new Set(filtered.map(i => i.collection))];
+
+        groups.forEach(colName => {
+            let section = `<div class="collection-block"><h2 class="collection-title">${colName}</h2>`;
+            filtered.filter(i => i.collection === colName).forEach(bag => {
+                const color = bag.activeColor || bag.colors[0];
+                const imgIndex = bag.activeImgIndex || 1;
+                const id = `${bag.vzor}_${color}`;
+                const isChecked = selectedItems[id] ? 'checked' : '';
+
+                section += `
                 <div class="bag-row">
-                    <div class="photo-wrapper" onclick="nextPhoto('${bag.v}')">
-                        <div class="photo-container">
-                            <img id="img-${bag.v}" src="${getImgName(bag, firstColor)}" data-index="1" data-vzor="${bag.v}" data-barva="${firstColor}">
-                        </div>
-                        ${bag.type === 'new' ? '<div class="photo-nav">Klikněte pro další pohled</div>' : ''}
+                    <div class="carousel">
+                        <button class="carousel-btn prev" onclick="moveImg('${bag.vzor}', -1)">‹</button>
+                        <img src="${getImgPath(bag, color, imgIndex)}" id="img-${bag.vzor}">
+                        <button class="carousel-btn next" onclick="moveImg('${bag.vzor}', 1)">›</button>
+                        <div class="img-counter" id="count-${bag.vzor}">POHLED ${imgIndex}</div>
                     </div>
                     <div class="info">
-                        <h3>Model ${bag.v}</h3>
-                        <div class="price">${bag.p}</div>
+                        <h2>Model ${bag.vzor}</h2>
+                        <div class="price">${bag.price}</div>
                         <div class="colors">
-                            ${bag.b.map((color, i) => `
-                                <div class="swatch ${i===0?'active':''}" 
-                                     style="background: ${colorsMap[color] || '#ccc'}" 
-                                     onclick="changeVar('${bag.v}', '${color}', this)">
-                                </div>
+                            ${bag.colors.map(c => `
+                                <div class="swatch ${c === color ? 'active' : ''}" 
+                                     style="background:${colorsMap[c]}" 
+                                     onclick="changeColor('${bag.vzor}', '${c}')"></div>
                             `).join('')}
                         </div>
+                        <p style="font-size:11px; color:#999">Klikněte na barvu pro změnu fotek. Klikněte na šipky pro pohledy.</p>
                     </div>
-                    <div class="select-area">
-                        <input type="checkbox" class="cb-custom" onchange="refreshCount()">
+                    <div class="select-box">
+                        <label class="cb-container">
+                            <input type="checkbox" id="cb-${bag.vzor}" onchange="toggleSelect('${bag.vzor}', '${color}')" ${isChecked}>
+                            <span class="checkmark"></span>
+                        </label>
                     </div>
                 </div>`;
             });
-            html += `</section>`;
-            showroom.innerHTML += html;
+            section += `</div>`;
+            container.innerHTML += section;
+        });
+        updateSummary();
+    }
+
+    function changeColor(vzor, color) {
+        const bag = inventory.find(i => i.vzor === vzor);
+        bag.activeColor = color;
+        bag.activeImgIndex = 1;
+        // Pokud změní barvu, odškrtneme (podle tvého zadání)
+        document.getElementById(`cb-${vzor}`).checked = false;
+        delete selectedItems[`${vzor}_${color}`]; 
+        render();
+    }
+
+    function moveImg(vzor, dir) {
+        const bag = inventory.find(i => i.vzor === vzor);
+        if(!bag.activeImgIndex) bag.activeImgIndex = 1;
+        bag.activeImgIndex += dir;
+        if(bag.activeImgIndex < 1) bag.activeImgIndex = 3; // Předpokládáme 3 fotky
+        if(bag.activeImgIndex > 3) bag.activeImgIndex = 1;
+        render();
+    }
+
+    function toggleSelect(vzor, color) {
+        const id = `${vzor}_${color}`;
+        if(document.getElementById(`cb-${vzor}`).checked) {
+            selectedItems[id] = true;
+        } else {
+            delete selectedItems[id];
         }
+        localStorage.setItem('vzorkovna_selection', JSON.stringify(selectedItems));
+        updateSummary();
     }
 
-    function changeVar(vzor, barva, el) {
-        const bag = inventory.find(i => i.v === vzor);
-        const img = document.getElementById(`img-${vzor}`);
-        img.src = getImgName(bag, barva, 1);
-        img.dataset.index = 1;
-        img.dataset.barva = barva;
-        el.parentElement.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
-        el.classList.add('active');
-    }
-
-    function nextPhoto(vzor) {
-        const bag = inventory.find(i => i.v === vzor);
-        if (bag.type === "old") return;
-        const img = document.getElementById(`img-${vzor}`);
-        let currentIndex = parseInt(img.dataset.index);
-        currentIndex = currentIndex >= 5 ? 1 : currentIndex + 1;
-        const nextSrc = getImgName(bag, img.dataset.barva, currentIndex);
-        const temp = new Image();
-        temp.onload = () => { img.src = nextSrc; img.dataset.index = currentIndex; };
-        temp.onerror = () => { if(currentIndex !== 1) nextPhoto(vzor); };
-        temp.src = nextSrc;
-    }
-
-    function refreshCount() {
-        const count = document.querySelectorAll('.cb-custom:checked').length;
+    function updateSummary() {
+        const count = Object.keys(selectedItems).length;
         document.getElementById('count').innerText = count;
-        document.getElementById('summary-bar').style.display = count > 0 ? 'flex' : 'none';
+        document.getElementById('summary-bar').classList.toggle('visible', count > 0);
     }
 
-    init();
+    function sendOrder() {
+        alert("Poptávka na " + Object.keys(selectedItems).join(", ") + " byla připravena.");
+    }
+
+    render();
 </script>
 </body>
 </html>
